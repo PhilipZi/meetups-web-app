@@ -1,6 +1,6 @@
 import MeetupDetail from "../../components/meetups/MeetupDetail";
 
-function MeetupDetails() {
+function MeetupDetailsPage() {
   return (
     <MeetupDetail
       image="https://www.wissenschaft.de/wp-content/uploads/i/S/iStock-973113474-1.jpg"
@@ -11,4 +11,4 @@ function MeetupDetails() {
   );
 }
 
-export default MeetupDetails;
+export default MeetupDetailsPage;
