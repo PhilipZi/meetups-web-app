@@ -1,17 +1,14 @@
-import { Fragment } from "react";
+import MeetupDetail from "../../components/meetups/MeetupDetail";
 
-function MeetupDetails() {
+function MeetupDetailsPage() {
   return (
-    <Fragment>
-      <img
-        src="https://www.wissenschaft.de/wp-content/uploads/i/S/iStock-973113474-1.jpg"
-        alt="a city picture"
-      />
-      <h1>A first Meetup</h1>
-      <address>Some Street 6, some city </address>
-      <p>The Meetup description</p>
-    </Fragment>
+    <MeetupDetail
+      image="https://www.wissenschaft.de/wp-content/uploads/i/S/iStock-973113474-1.jpg"
+      title="A first Meetup"
+      address="Some Street 6, some city "
+      description="The Meetup description"
+    />
   );
 }
 
-export default MeetupDetails;
+export default MeetupDetailsPage;
