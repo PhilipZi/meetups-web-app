@@ -1,3 +1,5 @@
+import env from "dotenv";
+env.config();
 import { MongoClient } from "mongodb";
 
 function handler(req, res) {
@@ -6,9 +8,7 @@ function handler(req, res) {
 
     const { title, image, address, description } = data;
 
-    MongoClient.connect(
-      "mongodb+srv://philip:<password>@cluster0.cihy4.mongodb.net/?retryWrites=true&w=majority"
-    );
+    MongoClient.connect(process.env.MONGO_URI);
   }
 }
 export default handler;
