@@ -1,23 +1,8 @@
-import MeetupList from "../components/meetups/MeetupList";
+import env from "dotenv";
+env.config();
+import { MongoClient } from "mongodb";
 
-const DUMMY_MEETUPS = [
-  {
-    id: "m1",
-    title: "meetup 1",
-    image:
-      "https://www.futura-sciences.com/de/wp-content/uploads/2022/03/grosste-stadt-der-welt.jpg",
-    address: "Dresden",
-    description: "This is a first Meetup!",
-  },
-  {
-    id: "m2",
-    title: "meetup 2",
-    image:
-      "https://www.wissenschaft.de/wp-content/uploads/i/S/iStock-973113474-1.jpg",
-    address: "New York",
-    description: "This is a second Meetup!",
-  },
-];
+import MeetupList from "../components/meetups/MeetupList";
 
 function HomePage(props) {
   return <MeetupList meetups={props.meetups} />;
@@ -35,9 +20,24 @@ function HomePage(props) {
 // }
 
 export async function getStaticProps() {
+  console.log(process.env.MONGO_URI);
+  const client = await MongoClient.connect(process.env.MONGO_URI);
+  const db = client.db();
+
+  const meetupsCollection = db.collection("meetups");
+
+  const meetups = await meetupsCollection.find().toArray();
+
+  client.close();
+
   return {
     props: {
-      meetups: DUMMY_MEETUPS,
+      meetups: meetups.map((meetup) => ({
+        title: meetup.title,
+        address: meetup.address,
+        image: meetup.image,
+        id: meetup._id.toString(),
+      })),
     },
     revalidate: 1,
   };
