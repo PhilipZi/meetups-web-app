@@ -20,7 +20,6 @@ function HomePage(props) {
 // }
 
 export async function getStaticProps() {
-  console.log(process.env.MONGO_URI);
   const client = await MongoClient.connect(process.env.MONGO_URI);
   const db = client.db();
 
