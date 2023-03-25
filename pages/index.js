@@ -1,8 +1,9 @@
 import Head from "next/head";
-import env from "dotenv";
-env.config();
-import { MongoClient } from "mongodb";
+// import env from "dotenv";
+// env.config();
+// import { MongoClient } from "mongodb";
 
+import promise from "../lib/db";
 import MeetupList from "../components/meetups/MeetupList";
 import { Fragment } from "react";
 
@@ -33,15 +34,19 @@ function HomePage(props) {
 // }
 
 export async function getStaticProps() {
-  const client = await MongoClient.connect(process.env.MONGO_URI);
+  // const client = await MongoClient.connect(process.env.MONGO_URI);
+  // const db = client.db();
+  // const start = new Date().getTime();
+
+  const client = await promise;
+
   const db = client.db();
 
   const meetupsCollection = db.collection("meetups");
 
   const meetups = await meetupsCollection.find().toArray();
 
-  client.close();
-
+  // console.log(new Date().getTime() - start);
   return {
     props: {
       meetups: meetups.map((meetup) => ({

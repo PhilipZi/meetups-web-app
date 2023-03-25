@@ -25,6 +25,7 @@ function MeetupDetailsPage(props) {
 }
 
 export async function getStaticPaths() {
+  // const start = new Date().getTime();
   const client = await MongoClient.connect(process.env.MONGO_URI);
   const db = client.db();
 
@@ -33,7 +34,7 @@ export async function getStaticPaths() {
   const meetups = await meetupsCollection.find({}, { _id: 1 }).toArray();
 
   client.close();
-
+  // console.log(new Date().getTime() - start);
   return {
     fallback: false,
     paths: meetups.map((meetup) => ({
