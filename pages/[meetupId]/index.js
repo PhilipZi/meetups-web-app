@@ -4,6 +4,7 @@ env.config();
 import { MongoClient, ObjectId } from "mongodb";
 import { Fragment } from "react";
 import Head from "next/head";
+import promise from "../../lib/db";
 
 import MeetupDetail from "../../components/meetups/MeetupDetail";
 
@@ -26,14 +27,13 @@ function MeetupDetailsPage(props) {
 
 export async function getStaticPaths() {
   // const start = new Date().getTime();
-  const client = await MongoClient.connect(process.env.MONGO_URI);
+  const client = await promise;
   const db = client.db();
 
   const meetupsCollection = db.collection("meetups");
 
   const meetups = await meetupsCollection.find({}, { _id: 1 }).toArray();
 
-  client.close();
   // console.log(new Date().getTime() - start);
   return {
     fallback: false,
